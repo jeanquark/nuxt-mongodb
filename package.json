@@ -1,0 +1,22 @@
+{
+  "name": "nuxt-mongodb",
+  "version": "1.0.0",
+  "description": "My wonderful Nuxt.js project",
+  "author": "jeanquark",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.7.5",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {}
+}
