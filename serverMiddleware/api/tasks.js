@@ -1,8 +1,9 @@
-const { Router } = require('express')
+import { Router } from 'express'
+
+import Task from '../models/Task'
 
 const router = Router()
 
-import Task from '../../models/Task'
 
 
 /* GET tasks listing. */
@@ -86,4 +87,4 @@ router.delete('/task', (req, res) => {
     // res.json()
 })
 
-module.exports = router
+export default router

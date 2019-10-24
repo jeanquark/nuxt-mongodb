@@ -11,7 +11,7 @@
             <h4>Nice move Jean-Marc, but how about authentication? &#128534; <span style="color: grey;">Check out this example for integration with Passport.js.</span></h4>
             <h4>Cool, but yuck this hurts my eyes! &#128556; <span style="color: grey;">See how adding Tailwind CSS can dramatically improve rendering.</span></h4>
             <h4>Yeah... interesting, but you know, I'm more of a graphql type of guy! &#128563; <span style="color: grey;">Have a look at this Apollo example.</span></h4>
-            <h4>So you want me to deal with mongoDB internal intricacies? No thanks! &#128552; <span style="color: grey;">Go serverless with MongoDB Stitch.</span></h4>
+            <h4>So you want me to deal with MongoDB internal intricacies? No thanks! &#128552; <span style="color: grey;">Go serverless with MongoDB Stitch.</span></h4>
             <h4>If it ain't Google, I'm not going! &#128695; <span style="color: grey;">Firebase can do the job, too.</span></h4>
 
             <p>https://sabe.io/tutorials/getting-started-with-vuex</p>
@@ -22,6 +22,7 @@
                 <!-- <button @click="getAllPosts()">Get all posts</button> -->
                 <!-- <button @click="getArticle('5da5f4770e2b4326446a3bf5')">Get one particular article</button> -->
                 <button @click="getTasks()">Get all tasks</button>
+                <button @click="register()">Register new user</button>
             </div>
             
             <br /><br />
@@ -43,6 +44,7 @@
 </template>
 
 <script>
+    import axios from 'axios'
     export default {
         data () {
             return {
@@ -62,6 +64,9 @@
             }
         },
         methods: {
+            register () {
+                axios.post('/api/register', { email: 'john.doe@example.com', password: 'secret' })
+            },
             async getTasks() {
                 try {
                     await this.$store.dispatch('tasks/fetchTasks')

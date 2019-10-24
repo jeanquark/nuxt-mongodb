@@ -42,6 +42,7 @@ export default {
   serverMiddleware: [
     // '~/serverMiddleware/databaseInit.js',
     '~/serverMiddleware/api/index.js',
+    // '~/serverMiddleware/index.js',
     // {
     //   path: '/api/',
     //   handler: '~/serverMiddleware/api/index'
