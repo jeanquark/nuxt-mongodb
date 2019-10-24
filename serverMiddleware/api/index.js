@@ -14,15 +14,15 @@ function connect() {
 }
 
 // Require API routes
-const users = require('./routes/users')
-const articles = require('./routes/articles')
-const posts = require('./routes/posts')
+// const users = require('./routes/users')
+// const articles = require('./routes/articles')
+// const posts = require('./routes/posts')
 const tasks = require('./routes/tasks')
 
 // Import API Routes
-app.use(users)
-app.use(articles)
-app.use(posts)
+// app.use(users)
+// app.use(articles)
+// app.use(posts)
 app.use(tasks)
 
 // Export the server middleware
