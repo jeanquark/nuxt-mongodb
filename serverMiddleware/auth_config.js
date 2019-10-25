@@ -16,6 +16,8 @@ module.exports = (passport) => {
   passport.use(new LocalStrategy(
     { usernameField: 'email' },
     (email, password, done) => {
+      console.log('email2: ', email)
+      console.log('password2: ', password)
       User.findOne({ email }, (err, user) => {
         if (err) return done(err)
         if (!user) return done(null, false, { message: 'No such user' })

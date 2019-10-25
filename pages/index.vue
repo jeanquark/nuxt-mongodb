@@ -2,30 +2,39 @@
     <div class="container">
         <div>
             <h1 class="title">RESTful Todo list with Nuxt.js & MongoDB</h1>
-            
-            <div class="text-center">
-                <img src="/img/nuxt.png" width="100" />
-                <img src="/img/mongodb.png" width="100" />
+            <br />
+            <div style="text-align: center;">
+                <div class="" style="display: inline-block;">
+                    <img src="/img/nuxt.png" width="100" style="vertical-align: middle;" />
+                    <img src="/img/mongodb.png" width="100" style="vertical-align: middle;" />
+                </div>
             </div>
+            <br />
 
-            <h4>Nice move Jean-Marc, but how about authentication? &#128534; <span style="color: grey;">Check out this example for integration with Passport.js.</span></h4>
-            <h4>Cool, but yuck this hurts my eyes! &#128556; <span style="color: grey;">See how adding Tailwind CSS can dramatically improve rendering.</span></h4>
-            <h4>Yeah... interesting, but you know, I'm more of a graphql type of guy! &#128563; <span style="color: grey;">Have a look at this Apollo example.</span></h4>
+            <h4>Nice move buddy, but how about authentication? &#128534; <span style="color: grey;">Check out this example for integration with Passport.js.</span></h4>
+            <h4>Cool, but yuck this hurts my eyes! &#128556; <span style="color: grey;">See how adding Tailwind CSS dramatically improves rendering.</span></h4>
+            <h4>Yeah... that's interesting, but you know, I'm more of a graphql type of guy! &#128563; <span style="color: grey;">Have a look at this Apollo example.</span></h4>
             <h4>So you want me to deal with MongoDB internal intricacies? No thanks! &#128552; <span style="color: grey;">Go serverless with MongoDB Stitch.</span></h4>
-            <h4>If it ain't Google, I'm not going! &#128695; <span style="color: grey;">Firebase can do the job, too.</span></h4>
+            <h4>If it ain't Google, I'm not going! &#128293; <span style="color: grey;">Firebase can do the job, too.</span></h4>
+            <h4>HOW DARE YOU <span style="">not use React!</span> <span style="color: grey;">Relax man, here's the Next.js version.</span></h4>
 
             <p>https://sabe.io/tutorials/getting-started-with-vuex</p>
+            <p>https://github.com/goleh/nuxt-passport-auth/blob/master/server/index.js</p>
             <div>
                 <nuxt-link to="/about">About</nuxt-link>
+                <nuxt-link to="/admin">Admin</nuxt-link>
                 <!-- <button @click="getUsers()">Get Users</button> -->
                 <!-- <button @click="getUser(1)">Get User</button> -->
                 <!-- <button @click="getAllPosts()">Get all posts</button> -->
                 <!-- <button @click="getArticle('5da5f4770e2b4326446a3bf5')">Get one particular article</button> -->
                 <button @click="getTasks()">Get all tasks</button>
                 <button @click="register()">Register new user</button>
+                <button @click="login()">Login John Doe</button>
+                <button @click="logout()">Logout</button>
             </div>
             
             <br /><br />
+            authUser: {{ authUser }}<br /> 
 
             <h3>Instructions:</h3>
             Click to toggle "completed" status<br />
@@ -49,6 +58,14 @@
         data () {
             return {
                 form: {
+                    register: {
+                        email: 'john.doe@example.com',
+                        password: 'secret'
+                    },
+                    login: {
+                        email: 'john.doe@example.com',
+                        password: 'secret'
+                    },
                     title: '',
                     content: ''
                 }
@@ -61,18 +78,48 @@
         computed: {
             tasks () {
                 return this.$store.getters['tasks/loadedTasks']
+            },
+            authUser () {
+                return this.$store.getters['auth/loadedAuthUser']
             }
         },
         methods: {
-            register () {
-                axios.post('/api/register', { email: 'john.doe@example.com', password: 'secret' })
+            async register () {
+                try {
+                    // const abc = await axios.post('/api/register', this.form.register)
+                    const abc = await this.$store.dispatch('auth/register', this.form.register)
+                    console.log('abc: ', abc)
+                } catch (error) {
+                    console.error(error)
+                    alert('Sorry, an error occured during registration attempt.')
+                }
+            },
+            async login () {
+                try {
+                    // const abc = await axios.post('/api/login', this.form.login)
+                    const abc = await this.$store.dispatch('auth/login', this.form.login)
+                    console.log('abc: ', abc)
+                } catch (error) {
+                    console.error(error)
+                    alert('Sorry, an error occured during login attempt.')
+                }
+            },
+            async logout () {
+                try {
+                    // const abc = await axios.post('/api/logout')
+                    const abc = await this.$store.dispatch('auth/logout')
+                    console.log('abc: ', abc)
+                } catch (error) {
+                    console.error(error)
+                    alert('Sorry, an error occured during logout attempt.')
+                }
             },
             async getTasks() {
                 try {
                     await this.$store.dispatch('tasks/fetchTasks')
                 } catch (error) {
                     console.error(error)
-                    alert('Sorry, an error occured while trying to retrieve tasks.')
+                    alert('Sorry, an error occured during logout attempt.')
                 }
             },
             async createTask () {
@@ -81,7 +128,7 @@
                     // alert('Task was created successfully!')
                 } catch (error) {
                     console.error('error: ', error)
-                    alert('Sorry, an error occured while trying to create a new task.')
+                    alert('Sorry, an error occured during new task creation attempt.')
                 }
             },
             async toggleTask(id) {
@@ -93,7 +140,7 @@
                     // alert('Task was updated successfully!')
                 } catch(error) {
                     console.error(error)
-                    alert('Sorry, an error occured.')
+                    alert('Sorry, an error occured during toggle attempt.')
                 }
             },
             async updateTask(id, index) {
@@ -104,7 +151,7 @@
                     alert('Task was updated successfully!')
                 } catch(error) {
                     console.error(error)
-                    alert('Sorry, an error occured while trying to update a task.')
+                    alert('Sorry, an error occured during task update attempt.')
                 }
             },
             async deleteTask(id) {
@@ -115,7 +162,7 @@
                     // alert('Task was deleted successfully!')
                 } catch(error) {
                     console.error(error)
-                    alert('Sorry, an error occured while trying to delete a task.')
+                    alert('Sorry, an error occured during task deletion attempt.')
                 }
             }
         }

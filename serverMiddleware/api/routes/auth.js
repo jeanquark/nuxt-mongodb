@@ -25,6 +25,7 @@ router.post('/register', (req, res) => {
 
 router.post('/login', passport.authenticate('local'), (req, res) => {
   req.user.password = undefined
+  console.log('req.user: ', req.user)
   res.json(req.user)
 })
 

@@ -12,7 +12,11 @@ export const mutations = {
 
 export const actions = {
     async nuxtServerInit ({ commit, dispatch }, { req }) {
-
+        console.log('Call to nuxtServerInit: ', req.user)
+    	if (req.user) {
+            console.log('commit SET_USER')
+    		commit('auth/SET_USER', req.user)
+    	}
     }
 }
 
